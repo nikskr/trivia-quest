@@ -1,22 +1,8 @@
-import type { Difficulty, GameState, Question } from '../types.js';
+import type { GameState, Question } from '../types.js';
+import { calculateScore } from './calculateScore.js';
 
 export type GameAction =
   { type: 'start'; questions: Question[] } | { type: 'answer'; answer: string } | { type: 'next' } | { type: 'finish' };
-
-// Temporary scoring logic until TS-16 is merged into dev.
-function getAnswerScore(isCorrect: boolean, difficulty: Difficulty, streak: number): number {
-  if (!isCorrect) {
-    return 0;
-  }
-
-  const points: Record<Difficulty, number> = {
-    easy: 10,
-    medium: 20,
-    hard: 30,
-  };
-
-  return points[difficulty] + (streak >= 3 ? 5 : 0);
-}
 
 export function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
@@ -45,7 +31,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 
       const newStreak = isCorrect ? state.streak + 1 : 0;
 
-      const points = getAnswerScore(isCorrect, question.difficulty, newStreak);
+      const points = calculateScore(isCorrect, question.difficulty, newStreak);
 
       return {
         ...state,
