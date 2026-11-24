@@ -1,16 +1,6 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import {
-  beforeEach,
-  describe,
-  expect,
-  it,
-  vi,
-} from 'vitest';
-
-import {
-  addRecord,
-  getTopRecords,
-} from './records.js';
+import { addRecord, getTopRecords } from './records.js';
 
 describe('Records and localStorage', () => {
   const data = new Map<string, string>();
@@ -27,9 +17,7 @@ describe('Records and localStorage', () => {
         data.delete(key);
       }),
       clear: vi.fn(() => data.clear()),
-      key: vi.fn((index: number) =>
-        [...data.keys()][index] ?? null,
-      ),
+      key: vi.fn((index: number) => [...data.keys()][index] ?? null),
       get length() {
         return data.size;
       },
