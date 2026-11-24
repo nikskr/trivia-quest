@@ -22,3 +22,17 @@ export interface GameState {
   streak: number;
   status: 'playing' | 'answered' | 'finished';
 }
+
+export interface RawQuestion {
+  type: 'multiple' | 'boolean';
+  difficulty: Difficulty;
+  category: string;
+  question: string;
+  correct_answer: string;
+  incorrect_answers: string[];
+}
+
+export interface ApiResponse {
+  response_code: number;
+  results: RawQuestion[];
+}
