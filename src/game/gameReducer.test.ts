@@ -1,4 +1,3 @@
-
 import { describe, it, expect } from 'vitest';
 import type { GameState, Question } from '../types.js';
 import { gameReducer } from './gameReducer.js';
