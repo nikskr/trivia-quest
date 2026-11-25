@@ -7,7 +7,6 @@ import { createResultPage } from './pages/result.js';
 import { fetchCategories } from './api/fetchCategories.js';
 import { fetchQuestions } from './api/fetchQuestions.js';
 import { mapApiQuestion } from './api/mapApiQuestion.js';
-import { setQuestions } from './session.js';
 
 import { gameReducer } from './game/gameReducer.js';
 import { addRecord } from './game/records.js';
@@ -25,9 +24,6 @@ function getApp(): HTMLElement {
 }
 
 const app = getApp();
-
-// Temporary demo questions.
-// These will be replaced with API data.
 
 let state: GameState = {
   questions: [],
@@ -104,8 +100,6 @@ function createPlaceholder(title: string): HTMLElement {
   return page;
 }
 
-// Start a new demo game
-
 // Handle player answer
 
 function handleAnswer(answer: string): void {
@@ -176,8 +170,6 @@ function renderQuestion(): HTMLElement {
   });
 }
 
-// Temporary settings screen
-
 // Render results screen
 
 function renderResult(): HTMLElement {
@@ -199,6 +191,7 @@ function renderResult(): HTMLElement {
 
   return createPlaceholder('Finish the quiz first');
 }
+
 // Hash router
 
 startRouter(app, {
@@ -215,8 +208,6 @@ startRouter(app, {
       },
 
       onStart: (questions) => {
-        setQuestions(questions);
-
         state = gameReducer(state, {
           type: 'start',
           questions,
@@ -239,7 +230,7 @@ startRouter(app, {
     }),
 
   '/game': () => {
-    if (state.questions.length === 0) {
+    if (state.questions.length === 0 || state.status === 'finished') {
       return createPlaceholder('Start a quiz first');
     }
 
@@ -248,5 +239,3 @@ startRouter(app, {
 
   '/result': renderResult,
 });
-
-console.log('Trivia Quest started');
