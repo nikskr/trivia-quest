@@ -5,55 +5,6 @@
   list-style-type: none;
 }
 
-.about-page {
-  max-width: 850px;
-  margin: 60px auto;
-  padding: 40px;
-  font-family: Arial, sans-serif;
-  color: #25253b;
-  line-height: 1.6;
-}
-
-.about-page h1 {
-  font-size: 48px;
-  color: #6842c2;
-  margin-bottom: 20px;
-}
-
-.about-page h2 {
-  font-size: 26px;
-  margin-top: 28px;
-  margin-bottom: 12px;
-}
-
-.about-page p {
-  font-size: 17px;
-}
-
-.about-page ul {
-  margin: 16px 0;
-  padding-left: 24px;
-}
-
-.about-page li {
-  margin-bottom: 10px;
-}
-
-.about-page .play-button {
-  display: inline-block;
-  margin-top: 24px;
-  padding: 14px 32px;
-  background: #6842c2;
-  color: white;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.about-page .play-button:hover {
-  background: #4e2e9e;
-}
-
 /* TS-19: Trivia Quest About Page */
 
 .about-page {
@@ -93,7 +44,7 @@
 }
 
 .about-page h1::before {
-  content: '✦ CHALLENGE YOUR MIND ✦';
+  content: '\2726  CHALLENGE YOUR MIND  \2726';
   display: block;
   width: fit-content;
   margin: 0 auto 22px;
@@ -152,7 +103,7 @@
 }
 
 .about-page li::before {
-  content: '✦';
+  content: '\2726';
   display: block;
   color: #a78bfa;
   font-size: 26px;
@@ -184,7 +135,7 @@
 }
 
 .about-page .play-button::after {
-  content: ' →';
+  content: ' \2192';
 }
 
 .about-page .play-button:hover {
@@ -736,6 +687,31 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .answer-button {
+    transition: none;
+  }
+}
+
+/* TS-23: Button hover improvements */
+
+.next-button {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.next-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 35px rgba(109, 68, 255, 0.45);
+  filter: brightness(1.12);
+}
+
+.next-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .next-button {
     transition: none;
   }
 }
