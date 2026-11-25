@@ -36,3 +36,12 @@ export interface ApiResponse {
   response_code: number;
   results: RawQuestion[];
 }
+
+export interface Category {
+  id: number;
+  name: string;
+}
+
+export interface CategoriesResponse {
+  trivia_categories: Category[];
+}
