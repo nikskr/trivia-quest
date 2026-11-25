@@ -1,5 +1,10 @@
 import { startRouter } from './router.js';
 import { createAboutPage } from './pages/about.js';
+import { createSettingsPage } from './pages/settings.js';
+import { fetchCategories } from './api/fetchCategories.js';
+import { fetchQuestions } from './api/fetchQuestions.js';
+import { mapApiQuestion } from './api/mapApiQuestion.js';
+import { setQuestions } from './session.js';
 
 const app = document.querySelector<HTMLElement>('#app');
 
@@ -26,7 +31,17 @@ startRouter(app, {
   '/': createAboutPage,
 
   '/settings': () => {
-    return createPlaceholder('Settings — Coming Soon');
+    return createSettingsPage({
+      loadCategories: fetchCategories,
+      loadQuestions: async (settings, signal) => {
+        const raw = await fetchQuestions(settings, signal);
+        return raw.map((q, i) => mapApiQuestion(q, String(i)));
+      },
+      onStart: (questions) => {
+        setQuestions(questions);
+        window.location.hash = '#/game';
+      },
+    });
   },
 
   '/game': () => {
