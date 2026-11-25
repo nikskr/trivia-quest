@@ -25,9 +25,6 @@ function getApp(): HTMLElement {
 
 const app = getApp();
 
-// Temporary demo questions.
-// These will be replaced with API data.
-
 let state: GameState = {
   questions: [],
   index: 0,
@@ -103,8 +100,6 @@ function createPlaceholder(title: string): HTMLElement {
   return page;
 }
 
-// Start a new demo game
-
 // Handle player answer
 
 function handleAnswer(answer: string): void {
@@ -175,8 +170,6 @@ function renderQuestion(): HTMLElement {
   });
 }
 
-// Temporary settings screen
-
 // Render results screen
 
 function renderResult(): HTMLElement {
@@ -198,6 +191,7 @@ function renderResult(): HTMLElement {
 
   return createPlaceholder('Finish the quiz first');
 }
+
 // Hash router
 
 startRouter(app, {
@@ -245,5 +239,3 @@ startRouter(app, {
 
   '/result': renderResult,
 });
-
-console.log('Trivia Quest started');
