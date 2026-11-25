@@ -7,7 +7,6 @@ import { createResultPage } from './pages/result.js';
 import { fetchCategories } from './api/fetchCategories.js';
 import { fetchQuestions } from './api/fetchQuestions.js';
 import { mapApiQuestion } from './api/mapApiQuestion.js';
-import { setQuestions } from './session.js';
 
 import { gameReducer } from './game/gameReducer.js';
 import { addRecord } from './game/records.js';
@@ -215,8 +214,6 @@ startRouter(app, {
       },
 
       onStart: (questions) => {
-        setQuestions(questions);
-
         state = gameReducer(state, {
           type: 'start',
           questions,
