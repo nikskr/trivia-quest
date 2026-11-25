@@ -20,10 +20,11 @@ export function createAboutPage(): HTMLElement {
   const teamList = document.createElement('ul');
 
   const memberA = document.createElement('li');
-  memberA.textContent = 'Participant A — API integration and data management';
+  memberA.textContent = 'nikskr (Participant A) - API integration, ' + 'question processing, categories, and settings.';
 
   const memberB = document.createElement('li');
-  memberB.textContent = 'Participant B — Game logic, scoring and UI';
+  memberB.textContent =
+    'sanat135 (Participant B) - Game logic, scoring, ' + 'records, question and result screens, and About Us.';
 
   teamList.append(memberA, memberB);
 

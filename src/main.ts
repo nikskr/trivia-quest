@@ -40,6 +40,54 @@ let state: GameState = {
 let correctCount = 0;
 let recordSaved = false;
 
+const RESULT_STORAGE_KEY = 'trivia-quest-result';
+
+interface SavedResult {
+  state: GameState;
+  correctCount: number;
+}
+
+function saveResultToStorage(): void {
+  try {
+    const result: SavedResult = {
+      state,
+      correctCount,
+    };
+
+    sessionStorage.setItem(RESULT_STORAGE_KEY, JSON.stringify(result));
+  } catch {
+    console.warn('Unable to save quiz result');
+  }
+}
+
+function loadResultFromStorage(): SavedResult | null {
+  try {
+    const saved = sessionStorage.getItem(RESULT_STORAGE_KEY);
+
+    if (!saved) {
+      return null;
+    }
+
+    const result = JSON.parse(saved) as SavedResult;
+
+    if (
+      !result.state ||
+      result.state.status !== 'finished' ||
+      !Array.isArray(result.state.questions) ||
+      !Number.isFinite(result.state.score) ||
+      !Number.isInteger(result.correctCount) ||
+      result.correctCount < 0 ||
+      result.correctCount > result.state.questions.length
+    ) {
+      return null;
+    }
+
+    return result;
+  } catch {
+    return null;
+  }
+}
+
 function createPlaceholder(title: string): HTMLElement {
   const page = document.createElement('main');
   page.className = 'game-page';
@@ -89,7 +137,7 @@ function saveResult(): void {
   if (recordSaved || state.status !== 'finished') {
     return;
   }
-
+  saveResultToStorage();
   addRecord({
     name: 'Player',
     score: state.score,
@@ -133,16 +181,24 @@ function renderQuestion(): HTMLElement {
 // Render results screen
 
 function renderResult(): HTMLElement {
-  if (state.status !== 'finished' || state.questions.length === 0) {
-    return createPlaceholder('Finish the quiz first');
+  if (state.status === 'finished' && state.questions.length > 0) {
+    return createResultPage({
+      state,
+      correctCount,
+    });
   }
 
-  return createResultPage({
-    state,
-    correctCount,
-  });
-}
+  const savedResult = loadResultFromStorage();
 
+  if (savedResult) {
+    return createResultPage({
+      state: savedResult.state,
+      correctCount: savedResult.correctCount,
+    });
+  }
+
+  return createPlaceholder('Finish the quiz first');
+}
 // Hash router
 
 startRouter(app, {
@@ -168,6 +224,11 @@ startRouter(app, {
 
         correctCount = 0;
         recordSaved = false;
+        try {
+          sessionStorage.removeItem(RESULT_STORAGE_KEY);
+        } catch {
+          console.warn('Unable to clear previous result');
+        }
 
         if (window.location.hash === '#/game') {
           app.replaceChildren(renderQuestion());
