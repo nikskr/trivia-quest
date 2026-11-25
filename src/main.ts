@@ -1,12 +1,18 @@
 import { startRouter } from './router.js';
 import { createAboutPage } from './pages/about.js';
+import { createSettingsPage } from './pages/settings.js';
 import { createQuestionPage } from './pages/question.js';
 import { createResultPage } from './pages/result.js';
+
+import { fetchCategories } from './api/fetchCategories.js';
+import { fetchQuestions } from './api/fetchQuestions.js';
+import { mapApiQuestion } from './api/mapApiQuestion.js';
+import { setQuestions } from './session.js';
 
 import { gameReducer } from './game/gameReducer.js';
 import { addRecord } from './game/records.js';
 
-import type { GameState, Question } from './types.js';
+import type { GameState } from './types.js';
 
 function getApp(): HTMLElement {
   const element = document.querySelector<HTMLElement>('#app');
@@ -22,33 +28,6 @@ const app = getApp();
 
 // Temporary demo questions.
 // These will be replaced with API data.
-
-const demoQuestions: Question[] = [
-  {
-    id: '1',
-    text: 'What is the largest planet in our Solar System?',
-    category: 'Science',
-    difficulty: 'easy',
-    answers: ['Earth', 'Jupiter', 'Mars', 'Saturn'],
-    correctAnswer: 'Jupiter',
-  },
-  {
-    id: '2',
-    text: 'What is the capital of France?',
-    category: 'Geography',
-    difficulty: 'medium',
-    answers: ['London', 'Paris', 'Berlin', 'Madrid'],
-    correctAnswer: 'Paris',
-  },
-  {
-    id: '3',
-    text: 'Which language runs in a web browser?',
-    category: 'Technology',
-    difficulty: 'easy',
-    answers: ['Python', 'C++', 'JavaScript', 'Java'],
-    correctAnswer: 'JavaScript',
-  },
-];
 
 let state: GameState = {
   questions: [],
@@ -78,22 +57,6 @@ function createPlaceholder(title: string): HTMLElement {
 }
 
 // Start a new demo game
-
-function startGame(): void {
-  state = gameReducer(state, {
-    type: 'start',
-    questions: demoQuestions,
-  });
-
-  correctCount = 0;
-  recordSaved = false;
-
-  if (window.location.hash === '#/game') {
-    app.replaceChildren(renderQuestion());
-  } else {
-    window.location.hash = '#/game';
-  }
-}
 
 // Handle player answer
 
@@ -167,21 +130,6 @@ function renderQuestion(): HTMLElement {
 
 // Temporary settings screen
 
-function renderSettings(): HTMLElement {
-  const page = createPlaceholder('Demo Quiz Settings');
-
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'next-button';
-  button.textContent = 'Start Demo Quiz';
-
-  button.addEventListener('click', startGame);
-
-  page.append(button);
-
-  return page;
-}
-
 // Render results screen
 
 function renderResult(): HTMLElement {
@@ -199,8 +147,44 @@ function renderResult(): HTMLElement {
 
 startRouter(app, {
   '/': createAboutPage,
-  '/settings': renderSettings,
-  '/game': renderQuestion,
+
+  '/settings': () =>
+    createSettingsPage({
+      loadCategories: fetchCategories,
+
+      loadQuestions: async (settings, signal) => {
+        const raw = await fetchQuestions(settings, signal);
+
+        return raw.map((question, index) => mapApiQuestion(question, String(index)));
+      },
+
+      onStart: (questions) => {
+        setQuestions(questions);
+
+        state = gameReducer(state, {
+          type: 'start',
+          questions,
+        });
+
+        correctCount = 0;
+        recordSaved = false;
+
+        if (window.location.hash === '#/game') {
+          app.replaceChildren(renderQuestion());
+        } else {
+          window.location.hash = '#/game';
+        }
+      },
+    }),
+
+  '/game': () => {
+    if (state.questions.length === 0) {
+      return createPlaceholder('Start a quiz first');
+    }
+
+    return renderQuestion();
+  },
+
   '/result': renderResult,
 });
 
