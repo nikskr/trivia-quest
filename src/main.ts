@@ -230,7 +230,7 @@ startRouter(app, {
     }),
 
   '/game': () => {
-    if (state.questions.length === 0) {
+    if (state.questions.length === 0 || state.status === 'finished') {
       return createPlaceholder('Start a quiz first');
     }
 
