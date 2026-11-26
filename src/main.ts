@@ -194,6 +194,35 @@ function renderResult(): HTMLElement {
 
 // Hash router
 
+function createStartQuizPage(): HTMLElement {
+  const page = document.createElement('main');
+  page.className = 'game-page empty-game-page';
+
+  const card = document.createElement('section');
+  card.className = 'empty-game-card';
+
+  const icon = document.createElement('div');
+  icon.className = 'empty-game-icon';
+  icon.textContent = '🎮';
+
+  const title = document.createElement('h1');
+  title.textContent = 'Ready for a challenge?';
+
+  const description = document.createElement('p');
+  description.textContent =
+    'Your quiz has not started yet. Choose a category, ' + 'select your difficulty and begin your adventure!';
+
+  const button = document.createElement('a');
+  button.className = 'empty-game-button';
+  button.href = '#/settings';
+  button.textContent = 'Start Quiz →';
+
+  card.append(icon, title, description, button);
+  page.append(card);
+
+  return page;
+}
+
 startRouter(app, {
   '/': createAboutPage,
 
@@ -231,7 +260,7 @@ startRouter(app, {
 
   '/game': () => {
     if (state.questions.length === 0 || state.status === 'finished') {
-      return createPlaceholder('Start a quiz first');
+      return createStartQuizPage();
     }
 
     return renderQuestion();
