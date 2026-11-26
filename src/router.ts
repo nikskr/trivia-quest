@@ -14,7 +14,7 @@ export function startRouter(root: HTMLElement, routes: Routes): () => void {
       const backLink = document.createElement('a');
 
       title.textContent = '404 — Page not found';
-
+      notFound.className = 'router-not-found';
       backLink.href = '#/';
       backLink.textContent = 'Back to home';
 
