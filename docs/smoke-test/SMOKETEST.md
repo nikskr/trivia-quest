@@ -28,8 +28,8 @@
 | 9   | DevTools → Network request blocking: `api_category.php` → open Settings | "No connection. Check your internet and try again." + Retry button              | ✅         | [retry-button-with-block-request-url](images/retry-button-with-block-request-url.png) |
 | 10  | Remove the block → click Retry                                          | Category list is loaded                                                         | ✅         | —                                                                                     |
 | 11  | Start → Back right away → Start again within 5 s                        | "Too many requests. Wait 5 seconds and try again.", Start works again after 5 s | ✅         | [block-frequently-repeated-requests](images/block-frequently-repeated-requests.png)   |
-| 12  | Open an unknown route `#/qwertyyuiasd`                                  | 404 page in the app style with a link back                                      | ✅ → fixed | [404 (before fix)](images/404.png)                                                    |
-| 13  | Check the console on page load                                          | No errors                                                                       | ❌ → fixed | —                                                                                     |
+| 12  | Open an unknown route `#/qwertyyuiasd`                                  | 404 page in the app style with a link back                                      | ✅ → fixed | [404 (before fix)](images/404.png)                                                    |          |
+| 13  | Check the console on page load                                          | No errors                                                                       | ✅ → fixed | —                                                                                     |
 
 ## Issues found
 
