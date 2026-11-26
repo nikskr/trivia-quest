@@ -90,7 +90,7 @@ const MAX_CODE_POINT = 0x10ffff;
 const ENTITY = /&(?:#(\d+)|#[xX]([0-9a-fA-F]+)|([a-zA-Z][a-zA-Z0-9]*));/g;
 
 function fromCodePoint(code: number, original: string): string {
-  return code < MAX_CODE_POINT ? String.fromCodePoint(code) : original;
+  return code <= MAX_CODE_POINT ? String.fromCodePoint(code) : original;
 }
 
 export function decodeHtml(text: string): string {
