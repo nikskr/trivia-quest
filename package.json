@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "clean": "rimraf dist",
-    "copy-layout": "copyfiles index.html styles.css 404.html  dist/",
+    "copy-layout": "copyfiles index.html styles.css dist/",
     "build": "npm run clean && tsc && npm run copy-layout",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
