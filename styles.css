@@ -965,78 +965,62 @@ body {
   }
 }
 
-/* Custom 404 page */
-
-.not-found-body {
-  min-height: 100vh;
-  background: #0b1020;
+@media (prefers-reduced-motion: reduce) {
+  .not-found-button {
+    transition: none;
+  }
 }
 
-.not-found-page {
+/* Router: 404 Not Found */
+
+.router-not-found {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  padding: 30px;
+  text-align: center;
+  font-family: Inter, Arial, sans-serif;
+  color: #f8f9ff;
   background:
     radial-gradient(ellipse at 85% 10%, rgba(109, 68, 255, 0.25), transparent 45%),
     radial-gradient(ellipse at 10% 65%, rgba(38, 104, 238, 0.16), transparent 45%), #0b1020;
-  color: #f8f9ff;
-  font-family: Inter, Arial, sans-serif;
 }
 
-.not-found-card {
-  width: 100%;
-  max-width: 620px;
-  padding: 60px 32px;
-  text-align: center;
-  border: 1px solid rgba(167, 139, 250, 0.25);
-  border-radius: 24px;
-  background: rgba(27, 33, 59, 0.9);
+.router-not-found h1 {
+  font-size: clamp(32px, 6vw, 64px);
+  color: #c4b5fd;
+  font-weight: 800;
 }
 
-.not-found-code {
-  color: #a78bfa;
-  font-size: clamp(80px, 15vw, 140px);
-  font-weight: 900;
-  line-height: 1;
-}
-
-.not-found-card h1 {
-  margin: 22px 0;
-  font-size: clamp(26px, 5vw, 38px);
-}
-
-.not-found-card p {
-  margin-bottom: 32px;
-  color: #aab4ca;
-  line-height: 1.7;
-}
-
-.not-found-button {
+.router-not-found a {
   display: inline-block;
-  padding: 16px 36px;
+  padding: 16px 38px;
   border-radius: 14px;
   background: linear-gradient(135deg, #7c3aed, #2563eb);
-  color: white;
+  color: #fff;
   font-weight: 700;
   text-decoration: none;
+  box-shadow: 0 12px 35px rgba(109, 68, 255, 0.35);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
 
-.not-found-button:hover {
+.router-not-found a:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 45px rgba(109, 68, 255, 0.5);
 }
 
-.not-found-button:focus-visible {
+.router-not-found a:focus-visible {
   outline: 3px solid #93c5fd;
   outline-offset: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .not-found-button {
+  .router-not-found a {
     transition: none;
   }
 }
