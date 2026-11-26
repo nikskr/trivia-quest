@@ -964,3 +964,57 @@ body {
     transition: none;
   }
 }
+
+/* Router: 404 Not Found */
+
+.router-not-found {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  padding: 30px;
+  text-align: center;
+  font-family: Inter, Arial, sans-serif;
+  color: #f8f9ff;
+  background:
+    radial-gradient(ellipse at 85% 10%, rgba(109, 68, 255, 0.25), transparent 45%),
+    radial-gradient(ellipse at 10% 65%, rgba(38, 104, 238, 0.16), transparent 45%), #0b1020;
+}
+
+.router-not-found h1 {
+  font-size: clamp(32px, 6vw, 64px);
+  color: #c4b5fd;
+  font-weight: 800;
+}
+
+.router-not-found a {
+  display: inline-block;
+  padding: 16px 38px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 12px 35px rgba(109, 68, 255, 0.35);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.router-not-found a:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 45px rgba(109, 68, 255, 0.5);
+}
+
+.router-not-found a:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .router-not-found a {
+    transition: none;
+  }
+}
