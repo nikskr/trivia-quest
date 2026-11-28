@@ -82,7 +82,8 @@ export function createSettingsPage(deps: SettingsPageDeps): HTMLElement {
 
   const backLink = document.createElement('a');
   backLink.href = '#/';
-  backLink.textContent = 'Back';
+  backLink.textContent = 'Back to Home';
+  backLink.className = 'home-button';
 
   page.append(title, form, status, retryButton, backLink);
 
